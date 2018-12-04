@@ -1,6 +1,6 @@
 <#
     .SYNOPSIS
-        Finds established PowerShell sessions. 
+        Identifys potential PSSessions that have successfully been established.
 
        THIS CODE IS MADE AVAILABLE AS IS, WITHOUT WARRANTY OF ANY KIND. THE ENTIRE 
     	RISK OF THE USE OR THE RESULTS FROM THE USE OF THIS CODE REMAINS WITH THE USER.
