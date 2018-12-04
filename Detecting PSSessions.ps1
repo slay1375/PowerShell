@@ -7,7 +7,6 @@
 
     .DESCRIPTION
         Finds Type 3 logons with a logon process name "NtLmSsp" which is associated with remote powershell sessions.
-
 #>
 
 Get-EventLog security | where-object {$_.eventid -eq "4624"} | select -expandproperty message | ForEach-Object {
