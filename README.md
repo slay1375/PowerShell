@@ -1,4 +1,4 @@
-# Detecting PSSessions
+# Detecting-PSSessions
 
 Identifys potential PSSessions that have successfully been established.
 
