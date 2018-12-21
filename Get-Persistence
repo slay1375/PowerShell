@@ -77,8 +77,8 @@ if ($HKLM_Autorun | Where-Object {$_.property -eq "Autorun"}) {
 Function HKLM_Shell (){
 $HKLM_Shell= (Get-ItemProperty -path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\").shell
 if (!$HKLM_Shell) 
-    { break }
-if ($HKLM_Shell -ne "explorer.exe")     
+    {  }
+elseif ($HKLM_Shell -ne "explorer.exe")     
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon""`n`n" -ForegroundColor Yellow
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -92,15 +92,14 @@ if ($HKLM_Shell -ne "explorer.exe")
 }
 HKLM_Shell
 
-
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKLM_Runservices () {
-$HKLM_RunServices = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices"
+$HKLM_RunServices = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices" -ErrorAction SilentlyContinue
 if (!$HKLM_RunServices)
-    { Break }
-if (($HKLM_RunServices).ValueCount -gt 0) 
+    {  }
+elseif (($HKLM_RunServices).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -116,10 +115,10 @@ HKLM_Runservices
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKLM_RunServicesOnce () {
-$HKLM_RunServicesOnce = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce"
+$HKLM_RunServicesOnce = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce" -ErrorAction SilentlyContinue
 if (!$HKLM_RunServicesOnce)
-    { Break }
-if (($HKLM_RunServicesOnce).ValueCount -gt 0) 
+    {  }
+elseif (($HKLM_RunServicesOnce).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -131,14 +130,14 @@ if (($HKLM_RunServicesOnce).ValueCount -gt 0)
 }
 HKLM_RunServicesOnce
 
-# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKLM_RunOnceEx () {
-$HKLM_RunOnceEx = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx"
+$HKLM_RunOnceEx = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx" -ErrorAction SilentlyContinue
 if (!$HKLM_RunOnceEx)
-    { Break }
-if (($HKLM_RunOnceEx).ValueCount -gt 0) 
+    {  }
+elseif (($HKLM_RunOnceEx).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -154,10 +153,10 @@ HKLM_RunOnceEx
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKLM_ExplorerRun () {
-$HKLM_ExplorerRun = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
+$HKLM_ExplorerRun = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ErrorAction SilentlyContinue
 if (!$HKLM_ExplorerRun)
-    { Break }
-if (($HKLM_ExplorerRun).ValueCount -gt 0) 
+    {  }
+elseif (($HKLM_ExplorerRun).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -173,10 +172,10 @@ HKLM_ExplorerRun
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKLM_Notify () {
-$HKLM_Notify = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify"
+$HKLM_Notify = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" -ErrorAction SilentlyContinue
 if (!$HKLM_Notify)
-    { Break }
-if (($HKLM_Notify).ValueCount -gt 0) 
+    {  }
+elseif (($HKLM_Notify).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -194,8 +193,8 @@ HKLM_Notify
 Function HKLM_Userinit () {
 $HKLM_Userinit = (Get-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\").Userinit
 if (!$HKLM_Userinit) 
-    { break } 
-if ($HKLM_Userinit -ne "C:\windows\system32\userinit.exe,")      
+    {  } 
+elseif ($HKLM_Userinit -ne "C:\windows\system32\userinit.exe,")      
     { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon""`n`n" -ForegroundColor Yellow
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -243,8 +242,8 @@ if (($HKLM_AppInit_DLLs).ValueCount -gt 0) {
 Function HKLM_BootExecute () {
 $HKLM_BootExecute = ((Get-ItemProperty -Path "HKLM:\\SYSTEM\ControlSet001\Control\Session Manager").bootexecute)
 if (!$HKLM_BootExecute) 
-    { break }
-if ($HKLM_BootExecute -ne "autocheck autochk *")
+    {  }
+elseif ($HKLM_BootExecute -ne "autocheck autochk *")
     { Write-Host "Potential threat found in: HKLM:\\SYSTEM\ControlSet001\Control\Session Manager""`n`n" -ForegroundColor Yellow
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Smss.exe will launch anything present in the BootExecute key at HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager.`n`n" -ForegroundColor Gray
@@ -307,8 +306,8 @@ if ($HKCU_Autorun | Where-Object {$_.property -eq "Autorun"}) {
 Function HKCU_Shell () {
 $HKCU_Shell= (Get-ItemProperty -path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\").shell
 if (!$HKCU_Shell) 
-    { break }
-if ($HKCU_Shell -ne "explorer.exe")     
+    {  }
+elseif ($HKCU_Shell -ne "explorer.exe")     
     { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon""`n`n" -ForegroundColor Yellow
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -326,10 +325,10 @@ HKCU_Shell
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKCU_RuneServices () {
-$HKCU_RunServices = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices"
+$HKCU_RunServices = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices" -ErrorAction SilentlyContinue
 if (!$HKCU_RunServices)
-    { Break }
-if (($HKCU_RunServices).ValueCount -gt 0) 
+    {  }
+elseif (($HKCU_RunServices).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -345,10 +344,10 @@ HKCU_RuneServices
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKCU_RuneServicesOnce () {
-$HKCU_RunServicesOnce = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce"
+$HKCU_RunServicesOnce = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce" -ErrorAction SilentlyContinue
 if (!$HKCU_RunServicesOnce)
-    { Break }
-if (($HKCU_RunServicesOnce).ValueCount -gt 0) 
+    {  }
+elseif (($HKCU_RunServicesOnce).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -364,10 +363,10 @@ HKCU_RuneServicesOnce
 # Anything in this registry key path automatically executes when any user logs on.
 
 Function HKCU_ExplorerRun () {
-$HKCU_ExplorerRun = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
+$HKCU_ExplorerRun = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ErrorAction SilentlyContinue
 if (!$HKCU_ExplorerRun)
-    { Break }
-if (($HKCU_ExplorerRun).ValueCount -gt 0) 
+    {  }
+elseif (($HKCU_ExplorerRun).ValueCount -gt 0) 
     { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
