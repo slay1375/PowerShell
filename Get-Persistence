@@ -89,7 +89,7 @@ if ($HKLM_Shell -ne "explorer.exe")
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n" -ForegroundColor Gray
     }
 
- # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
 # Anything in this registry key path automatically executes when any user logs on.
 
 $HKLM_RunServices = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices"
@@ -118,6 +118,54 @@ if (($HKLM_RunServicesOnce).ValueCount -gt 0)
       Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
       Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
       Write-Host ($HKLM_RunServicesOnce | Out-String) -ForegroundColor DarkYellow
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
+# Anything in this registry key path automatically executes when any user logs on.
+
+$HKLM_RunOnceEx = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx"
+if (!$HKLM_RunOnceEx)
+    { Break }
+if (($HKLM_RunOnceEx).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKLM_RunOnceEx | Out-String) -ForegroundColor DarkYellow
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+# Anything in this registry key path automatically executes when any user logs on.
+
+$HKLM_ExplorerRun = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
+if (!$HKLM_ExplorerRun)
+    { Break }
+if (($HKLM_ExplorerRun).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKLM_ExplorerRun | Out-String) -ForegroundColor DarkYellow
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
+# Anything in this registry key path automatically executes when any user logs on.
+
+$HKLM_Notify = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify"
+if (!$HKLM_Notify)
+    { Break }
+if (($HKLM_Notify).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKLM_Notify | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
 
@@ -262,7 +310,7 @@ if (($HKCU_RunServices).ValueCount -gt 0)
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
 
-# HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+# HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
 # Anything in this registry key path automatically executes when any user logs on.
 
 $HKCU_RunServicesOnce = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce"
@@ -275,6 +323,22 @@ if (($HKCU_RunServicesOnce).ValueCount -gt 0)
       Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
       Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
       Write-Host ($HKCU_RunServicesOnce | Out-String) -ForegroundColor DarkYellow -NoNewline
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+
+# HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+# Anything in this registry key path automatically executes when any user logs on.
+
+$HKCU_ExplorerRun = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
+if (!$HKCU_ExplorerRun)
+    { Break }
+if (($HKCU_ExplorerRun).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKCU_ExplorerRun | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
 
