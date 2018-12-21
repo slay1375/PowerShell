@@ -168,6 +168,44 @@ elseif (($HKLM_ExplorerRun).ValueCount -gt 0)
 }
 HKLM_ExplorerRun
 
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks
+# Anything in this registry key path automatically executes when any user logs on.
+
+Function HKLM_Tasks () {
+$HKLM_Tasks = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks" -ErrorAction SilentlyContinue
+if (!$HKLM_Tasks)
+    {  }
+elseif (($HKLM_Tasks).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKLM_Tasks | Out-String) -ForegroundColor DarkYellow
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+}
+HKLM_Tasks
+
+# HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
+# Anything in this registry key path automatically executes when any user logs on.
+
+Function HKLM_Tree () {
+$HKLM_Tree = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree" -ErrorAction SilentlyContinue
+if (!$HKLM_Tree)
+    {  }
+elseif (($HKLM_Tree).ValueCount -gt 0) 
+    { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host ($HKLM_Tree | Out-String) -ForegroundColor DarkYellow
+      Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
+    }
+}
+HKLM_Tree
+
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
 # Anything in this registry key path automatically executes when any user logs on.
 
@@ -262,10 +300,12 @@ HKLM_BootExecute
 
 $HKCU_Run = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 if (($HKCU_Run).ValueCount -gt 1) {
-     Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -ForegroundColor Yellow "`n`n"
-      Write-Host "   'SecurityHealth'" -ForegroundColor DarkYellow -NoNewline
-      Write-Host "should be the only value provided in the Property field. Conduct further analysis if any other values are present." -ForegroundColor Gray
-      Write-Host ($HKCU_Run | Out-String) -ForegroundColor Gray
+      Write-Host "Potential threat found in: HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" -ForegroundColor Yellow "`n`n"
+      Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
+      Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
+      Write-Host "    Course of action if a potential threat is found:" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'" -ForegroundColor Gray
+      Write-Host ($HKCU_Run | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
 }
 
