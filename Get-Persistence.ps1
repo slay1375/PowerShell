@@ -31,8 +31,8 @@ if (($HKLM_Run).ValueCount -gt 1) {
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
       Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
       Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
-      Write-Host "   'SecurityHealth'" -ForegroundColor DarkYellow -NoNewline
-      Write-Host "should be the only value provided in the Property field. Conduct further analysis if any other values are present." -ForegroundColor Gray
+      Write-Host "    SecurityHealth" -ForegroundColor DarkYellow -NoNewline
+      Write-Host " should be the only value provided in the Property field." -ForegroundColor Gray
       Write-Host ($HKLM_Run | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
 }
@@ -194,7 +194,7 @@ Function HKLM_Tree () {
 $HKLM_Tree = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree" -ErrorAction SilentlyContinue
 if (!$HKLM_Tree)
     {  }
-elseif (($HKLM_Tree).ValueCount -gt 0) 
+elseif (($HKLM_Tree).ValueCount -gt 1) 
     { Write-Host "Potential threat found in: HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree" -ForegroundColor Yellow "`n`n"
       Write-Host "    Why is this registry key value potential threat?`n`n" -ForegroundColor Gray
       Write-Host "           - Anything in this registry key path automatically executes when any user logs on.`n`n" -ForegroundColor Gray
@@ -425,14 +425,16 @@ $Folder_Startup = Get-ChildItem -Force "C:\ProgramData\Microsoft\Windows\Start M
 if (($Folder_Startup).count -gt 1) {
       Write-Host "Potential threat found in: C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp" -ForegroundColor Yellow
       Write-Host "     
-        Why is this a potential threat?
+    Why is this a potential threat?
            
-           - Anything in this folder automatically executes when any user logs on.
+           
+           - Anything in this folder automatically executes when any user logs on.`n`n" -ForegroundColor Gray
 
-        Course of action if a potential threat is found:
-
-            1. Get-ChildItem -Force -Path 'C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp'
-            2. Conduct further analysis on the files found in the 'Startup' folder" -ForegroundColor Gray "`n"
+      Write-Host "    Course of action if a potential threat is found:`n`n" -ForegroundColor Gray
+      Write-Host "           - Conduct further analysis if any values are present. Example: Get-Content -force -Path 'C:\Users\Public\Documents\malware.sct'`n`n" -ForegroundColor Gray
+      Write-Host "            desktop.ini" -ForegroundColor DarkYellow -NoNewline
+      Write-Host " should be the only value provided in the Property field.`n`n" -ForegroundColor Gray
+      Write-Host "            $Folder_Startup" -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
 }
 
