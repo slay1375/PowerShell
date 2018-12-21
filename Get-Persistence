@@ -74,6 +74,7 @@ if ($HKLM_Autorun | Where-Object {$_.property -eq "Autorun"}) {
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_Shell (){
 $HKLM_Shell= (Get-ItemProperty -path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\").shell
 if (!$HKLM_Shell) 
     { break }
@@ -88,10 +89,14 @@ if ($HKLM_Shell -ne "explorer.exe")
       Write-Host "    $HKLM_Shell`n" -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n" -ForegroundColor Gray
     }
+}
+HKLM_Shell
+
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_Runservices () {
 $HKLM_RunServices = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices"
 if (!$HKLM_RunServices)
     { Break }
@@ -104,10 +109,13 @@ if (($HKLM_RunServices).ValueCount -gt 0)
       Write-Host ($HKLM_RunServices | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_Runservices
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_RunServicesOnce () {
 $HKLM_RunServicesOnce = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce"
 if (!$HKLM_RunServicesOnce)
     { Break }
@@ -120,10 +128,13 @@ if (($HKLM_RunServicesOnce).ValueCount -gt 0)
       Write-Host ($HKLM_RunServicesOnce | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_RunServicesOnce
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_RunOnceEx () {
 $HKLM_RunOnceEx = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx"
 if (!$HKLM_RunOnceEx)
     { Break }
@@ -136,10 +147,13 @@ if (($HKLM_RunOnceEx).ValueCount -gt 0)
       Write-Host ($HKLM_RunOnceEx | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_RunOnceEx
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_ExplorerRun () {
 $HKLM_ExplorerRun = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
 if (!$HKLM_ExplorerRun)
     { Break }
@@ -152,10 +166,13 @@ if (($HKLM_ExplorerRun).ValueCount -gt 0)
       Write-Host ($HKLM_ExplorerRun | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_ExplorerRun
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_Notify () {
 $HKLM_Notify = Get-Item -Path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify"
 if (!$HKLM_Notify)
     { Break }
@@ -168,10 +185,13 @@ if (($HKLM_Notify).ValueCount -gt 0)
       Write-Host ($HKLM_Notify | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_Notify
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit.exe
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKLM_Userinit () {
 $HKLM_Userinit = (Get-ItemProperty -path "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\").Userinit
 if (!$HKLM_Userinit) 
     { break } 
@@ -186,6 +206,8 @@ if ($HKLM_Userinit -ne "C:\windows\system32\userinit.exe,")
       Write-Host "    $HKLM_Userinit`n" -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n" -ForegroundColor Gray
     }
+}
+HKLM_Userinit
 
 # HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad
 # Anything in this registry key path automatically executes when any user logs on.
@@ -218,6 +240,7 @@ if (($HKLM_AppInit_DLLs).ValueCount -gt 0) {
 # HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager
 # Smss.exe will launch anything present in the BootExecute key at HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager.
 
+Function HKLM_BootExecute () {
 $HKLM_BootExecute = ((Get-ItemProperty -Path "HKLM:\\SYSTEM\ControlSet001\Control\Session Manager").bootexecute)
 if (!$HKLM_BootExecute) 
     { break }
@@ -232,6 +255,8 @@ if ($HKLM_BootExecute -ne "autocheck autochk *")
       Write-Host "           $HKLM_BootExecute" -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKLM_BootExecute
 
 # HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 # Anything in this registry key path automatically executes when the current user logs on.
@@ -279,6 +304,7 @@ if ($HKCU_Autorun | Where-Object {$_.property -eq "Autorun"}) {
 # HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKCU_Shell () {
 $HKCU_Shell= (Get-ItemProperty -path "HKCU:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\").shell
 if (!$HKCU_Shell) 
     { break }
@@ -293,10 +319,13 @@ if ($HKCU_Shell -ne "explorer.exe")
       Write-Host "    $HKCU_Shell`n" -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n" -ForegroundColor Gray
     }
+}
+HKCU_Shell
 
-    # HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+# HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKCU_RuneServices () {
 $HKCU_RunServices = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices"
 if (!$HKCU_RunServices)
     { Break }
@@ -309,10 +338,13 @@ if (($HKCU_RunServices).ValueCount -gt 0)
       Write-Host ($HKCU_RunServices | Out-String) -ForegroundColor DarkYellow -NoNewline
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKCU_RuneServices
 
 # HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKCU_RuneServicesOnce () {
 $HKCU_RunServicesOnce = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce"
 if (!$HKCU_RunServicesOnce)
     { Break }
@@ -325,10 +357,13 @@ if (($HKCU_RunServicesOnce).ValueCount -gt 0)
       Write-Host ($HKCU_RunServicesOnce | Out-String) -ForegroundColor DarkYellow -NoNewline
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKCU_RuneServicesOnce
 
 # HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
 # Anything in this registry key path automatically executes when any user logs on.
 
+Function HKCU_ExplorerRun () {
 $HKCU_ExplorerRun = Get-Item -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run"
 if (!$HKCU_ExplorerRun)
     { Break }
@@ -341,6 +376,8 @@ if (($HKCU_ExplorerRun).ValueCount -gt 0)
       Write-Host ($HKCU_ExplorerRun | Out-String) -ForegroundColor DarkYellow
       Write-Host "_____________________________________________________________________________________________________________________________________________________________________`n`n" -ForegroundColor Gray
     }
+}
+HKCU_ExplorerRun
 
 # Startup Folder
 # Anything in this folder automatically executes when any user logs on.
