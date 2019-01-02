@@ -3,6 +3,7 @@
 Description: 
 
   - Queries specific Registry Keys on a computer and returns output if a value is present or not.
+    The following registry keys are known for persistence.
 
 List of Keys:
 
