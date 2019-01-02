@@ -1,3 +1,33 @@
+<#
+
+Description: Queries for a specific Registry Value on a computer and returns it if it's present or not.
+
+List of Keys:
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnceEx
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tasks
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Schedule\Taskcache\Tree
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Notify
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit.exe
+  - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\ShellServiceObjectDelayLoad
+  - HKEY_LOCAL_MACHINE\SOFTWARE\\Microsoft\Windows NT\CurrentVersion\Windows\
+  - HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Control\Session Manager
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Command Processor
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\\Shell
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServices
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
+  - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
+
+#>
+
 clear
 Write-Host "     
                  
@@ -18,6 +48,7 @@ Write-Host "
               |            /                            \             |
                \          /                              \           /
                 \________/                                \_________/
+
 `n" -ForegroundColor Gray
 Sleep (3)
 
