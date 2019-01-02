@@ -1,8 +1,11 @@
 <#
 
-Description: Queries for a specific Registry Value on a computer and returns it if it's present or not.
+Description: 
+
+  - Queries specific Registry Keys on a computer and returns output if a value is present or not.
 
 List of Keys:
+
   - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
   - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
   - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor
