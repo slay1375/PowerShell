@@ -1,13 +1,9 @@
 <#
-
 Description:
-  
   - Querys modified Group Policys by a specific date and exports them to a .csv file.
   
 Example:
-  
   - An example is provided below querying Group Policys that were modified from 01JAN2018 - 31JAN2018.
-
 #>
 
 $Start = Get-Date -Day 01 -Month 01 -Year 2018 -Hour 00
