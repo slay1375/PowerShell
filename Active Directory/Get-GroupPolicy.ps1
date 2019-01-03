@@ -1,8 +1,8 @@
 <#
-Description:
+.Description:
   - Querys modified Group Policys by a specific date and exports them to a .csv file.
   
-Example:
+.Example:
   - An example is provided below querying Group Policys that were modified from 01JAN2018 - 31JAN2018.
 #>
 
