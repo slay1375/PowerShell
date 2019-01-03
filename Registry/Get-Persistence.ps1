@@ -1,11 +1,11 @@
 <#
 
-Description: 
+.Description: 
 
   - Queries specific Registry Keys on a computer and returns output if a value is present or not.
     The following registry keys are known for persistence.
 
-List of Keys:
+ List of Keys:
 
   - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
   - HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\RunOnce
