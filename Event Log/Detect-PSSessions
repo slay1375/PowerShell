@@ -1,8 +1,8 @@
 <#
-.SYNOPSIS
+.Synopsis:
     - Identifys potential PSSessions that have successfully been established.
         
-.DESCRIPTION
+.Description:
     - Finds Type 3 logons with a logon process name "NtLmSsp" which is associated with remote powershell sessions.
 #>
 
