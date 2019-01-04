@@ -1,3 +1,6 @@
+
+$cred = Get-Credential
+clear
 $GoodImage = "3ware
 ACPI
 acpiex
@@ -91,16 +94,15 @@ Wof
 #Baseline
 $baseline = Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\* | ForEach-Object {if ($_.start -eq 0) {$_.pschildname}} | out-string
 $babyList = $baseline.split("`n") | Where-Object {$GoodImage.split("`n") -notcontains $_} | out-string
+$babyList | Out-String
 
-
-
-
+$computerlist = "DESKTOP-H68FUIA"
 
 foreach ($computer in $computerlist) {
 
-    Invoke-Command -ComputerName $computer { 
+    Invoke-Command -ComputerName $computer -Credential $cred -ScriptBlock { 
     
-    $GoodImage = "3ware
+$GoodImage = "3ware
 ACPI
 acpiex
 ADP80XX
@@ -191,14 +193,11 @@ Wof
         
         
 $baseline = Get-ItemProperty HKLM:\SYSTEM\CurrentControlSet\Services\* | ForEach-Object {if ($_.start -eq 0) {$_.pschildname}} | out-string
-$babyList = $baseline.split("`n") | Where-Object {$GoodImage.split("`n") -notcontains $_} | out-string
-    
-    } >> $Remotebabylist
+$RemotebabyList = $baseline.split("`n") | Where-Object {$GoodImage.split("`n") -notcontains $_} | out-string
+$RemotebabyList | Out-String 
+    }
 
 }
-
-
-
 
 
 $babyList.split("`n") | Where-Object {$Remotebabylist.split("`n") -notcontains $_}
