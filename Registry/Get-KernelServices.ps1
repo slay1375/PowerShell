@@ -15,19 +15,19 @@
        
        Start:
             Value	Start Type	Meaning
-            0x00	Boot	    The kernel loaded will load this driver first as its needed to use the boot volume device
-            0x01	System	    This is loaded by the I/O subsystem
-            0x02	Autoload	The service is always loaded and run
-            0x03	Manual	    This service does not start automatically and must be manually started by the user
-            0x04	Disabled	The service is disabled and should not be started
+            0x00	Boot	    The kernel loaded will load this driver first as its needed to use the boot volume device.
+            0x01	System	    This is loaded by the I/O subsystem.
+            0x02	Autoload	The service is always loaded and run.
+            0x03	Manual	    This service does not start automatically and must be manually started by the user.
+            0x04	Disabled	The service is disabled and should not be started.
             
        Type:
             Value	Meaning
-            0x01	Kernel-mode device driver
-            0x02	Kernel-mode device driver that implements the file system
-            0x04	Information used by the Network Adapter
-            0x10	A Win32 service that should be run as a stand-alone process
-            0x20	A Win32 service that can share address space with other services of the same type
+            0x01	Kernel-mode device driver.
+            0x02	Kernel-mode device driver that implements the file system.
+            0x04	Information used by the Network Adapter.
+            0x10	A Win32 service that should be run as a stand-alone process.
+            0x20	A Win32 service that can share address space with other services of the same type.
             
 .Source
     - https://www.itprotoday.com/compute-engines/what-are-errorcontrol-start-and-type-values-under-services-subkeys
