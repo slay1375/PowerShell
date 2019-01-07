@@ -32,8 +32,6 @@
 .Source
     - https://www.itprotoday.com/compute-engines/what-are-errorcontrol-start-and-type-values-under-services-subkeys
        
-            
-
 #>
 
 $cred = Get-Credential
