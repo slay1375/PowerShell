@@ -30,6 +30,13 @@
   - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\RunServicesOnce
   - HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer\Run
 
+.Notes  
+    File Name      : Get-Persistence.ps1
+    Version        : v.1.0
+    Author         : @PlayStation1; @TerrySmithMBA
+    Prerequisite   : Windows PowerShell 5.0
+    Created        : January 08, 2019
+
 #>
 
 clear
