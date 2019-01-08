@@ -27,7 +27,7 @@
             0x10	A Win32 service that should be run as a stand-alone process.
             0x20	A Win32 service that can share address space with other services of the same type.
  
-  .Notes  
+ .Notes  
     File Name      : Get-ServicesStartValue2.ps1
     Version        : v.1.0
     Author         : @PlayStation1; @TerrySmithMBA
