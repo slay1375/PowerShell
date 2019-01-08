@@ -4,6 +4,14 @@
   
 .Example:
   - An example is provided below querying Group Policys that were modified from 01JAN2018 - 31JAN2018.
+
+.Notes  
+    File Name      : Get-GroupPolicy.ps1
+    Version        : v.1.0
+    Author         : @PlayStation1
+    Prerequisite   : Windows PowerShell 5.0
+    Created        : January 08, 2019
+
 #>
 
 $Start = Get-Date -Day 01 -Month 01 -Year 2018 -Hour 00
