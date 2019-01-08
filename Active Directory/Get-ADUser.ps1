@@ -1,4 +1,5 @@
 <#
+
 .Description:
   - Query Active Directory user accounts by a specific creation date and exports them to a .csv file.
   
