@@ -26,8 +26,15 @@
             0x04	Information used by the Network Adapter.
             0x10	A Win32 service that should be run as a stand-alone process.
             0x20	A Win32 service that can share address space with other services of the same type.
-            
-.Source
+ 
+.Notes  
+    File Name      : Get-ServicesStartValue3.ps1
+    Version        : v.1.0
+    Author         : @PlayStation1; @TerrySmithMBA
+    Prerequisite   : Windows PowerShell 5.0
+    Created        : January 08, 2019
+ 
+ .Source
     - https://www.itprotoday.com/compute-engines/what-are-errorcontrol-start-and-type-values-under-services-subkeys
        
 #>
