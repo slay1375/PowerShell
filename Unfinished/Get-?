@@ -1,0 +1,16 @@
+    clear
+#System is not running a user-mode executable as it is created by ntoskrnl.exe (NT OS Kernel)
+$Process = Get-WmiObject -Class Win32_Process
+
+        foreach ($System in $Process){
+            
+            $test= [bool](Get-NetTCPConnection | Where-Object {$_.OwningProcess -eq $System.processid -and $_.State -eq "established"})
+            $ParentProcessName =  (get-wmiobject -Class Win32_process | ? {$_.processid -eq $system.parentprocessid}).name
+
+            ($System | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID  | Format-List | Out-String).trim()
+            foreach ($establishedIP in (Get-NetTCPConnection | ? {$_.owningprocess -eq $system.processid -and $_.state -eq "established"}).RemoteAddress){
+                Write-Host "Established       : $establishedIP"
+            } 
+            Write-Host ""
+        
+        }
