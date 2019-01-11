@@ -1,0 +1,35 @@
+clear
+$Process = Get-WmiObject -Class Win32_Process
+
+foreach ($Proc in $Process){
+            
+    $ParentProcessName =  (get-wmiobject -Class Win32_process | Where-Object {$_.processid -eq $Proc.parentprocessid}).name
+
+        if ($Proc.processname -eq "System Idle Process" -and($Proc.ProcessId -ne "0" -or $Proc.ParentProcessId -ne "0")){
+       
+                 Write-Host "Protential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " System Idle process" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - System Idle Process should have a ProcessID of 0 and a ParentProcessID of 0.`n"
+        }
+    
+    
+        if ($Proc.processname -eq "System" -and ($Proc.ProcessId -ne "4" -or $Proc.ParentProcessId -ne "0")){
+                 
+                 Write-Host "Protential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " System" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - System should have a ProcessID of 4 and a ParentProcessID of 0.`n"
+        
+        }
+
+    ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path  | Format-List | Out-String).trim()
+    
+    foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Proc.processid -and $_.state -eq "Established"})){
+        Write-Host "Established       : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
+    } 
+    
+    foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Proc.processid -and $_.state -eq "Listen"})){
+        Write-Host "Listening         : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
+    } 
+    Write-Host "___________________________________________________________________________________________________________________________________`n"
+        
+}
