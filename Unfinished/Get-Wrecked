@@ -21,7 +21,7 @@ foreach ($Proc in $Process){
         
         }
 
-    ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path  | Format-List | Out-String).trim()
+    ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine  | Format-List | Out-String).trim()
     
     foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Proc.processid -and $_.state -eq "Established"})){
         Write-Host "Established       : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
