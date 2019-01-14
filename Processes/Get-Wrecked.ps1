@@ -1,3 +1,13 @@
+<#
+.Notes  
+    File Name      : Get-Wrecked.ps1
+    Version        : v.1.0
+    Author         : @PlayStation1; @TerrySmithMBA
+    Prerequisite   : Windows PowerShell 5.0
+    Created        : January 14, 2019
+
+#>
+
 clear
 $Process = Get-WmiObject -Class Win32_Process
 
