@@ -13,7 +13,6 @@ $Process = Get-WmiObject -Class Win32_Process
 foreach ($Proc in $Process){
             
     $ParentProcessName =  (get-wmiobject -Class Win32_process | Where-Object {$_.processid -eq $Proc.parentprocessid}).name
-    $StartTime = (Get-Process | Where-Object {$_.processid -eq $Proc.parentprocessid}).StartTime
         
         if ($Proc.processname -eq "System Idle Process" -and($Proc.ProcessId -ne "0" -or $Proc.ParentProcessId -ne "0")){
                  #System Idle Process
@@ -60,7 +59,7 @@ foreach ($Proc in $Process){
                  Write-Host "     - csrss.exe should have no ParentProcessID.`n"
         } 
          
-    ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine, @{n="StartTime";e={ $StartTime }}  | Format-List | Out-String).trim()
+    ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine, @{n="StartTime";e={ $_.ConvertToDateTime($Proc.creationdate) }}  | Format-List | Out-String).trim()
     
     foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Proc.processid -and $_.state -eq "Established"})){
         Write-Host "Established       : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
