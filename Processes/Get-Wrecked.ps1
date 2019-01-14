@@ -21,8 +21,7 @@ foreach ($Proc in $Process){
                  Write-Host " System Idle process" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - System Idle Process should have a ProcessID of 0 and a ParentProcessID of 0.`n"
         }
-    
-    
+       
         if ($Proc.processname -eq "System" -and ($Proc.ProcessId -ne "4" -or $Proc.ParentProcessId -ne "0")){
                  #System
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
@@ -38,8 +37,7 @@ foreach ($Proc in $Process){
                  Write-Host "     - smss.exe should have a ParentProcessID of 4.`n"
         
         }
-
-                
+             
         if ($Proc.processname -eq "wininit.exe" -and ($ParentProcessName)){
                  
                  #wininit.exe
@@ -48,8 +46,7 @@ foreach ($Proc in $Process){
                  Write-Host "     - wininit.exe should have no ParentProcessID.`n"
         
         }  
-         
-
+        
     ($Proc | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine  | Format-List | Out-String).trim()
     
     foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Proc.processid -and $_.state -eq "Established"})){
