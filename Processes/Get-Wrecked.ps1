@@ -14,31 +14,38 @@ foreach ($Process in $ProcessList){
             
     $ParentProcessName =  (get-wmiobject -Class Win32_process | Where-Object {$_.processid -eq $Process.parentprocessid}).name
     $SID = ($Process).getownersid().SID
-    $User = ($Process).getowner().User
+    $User = ($Process).getowner().user
     $Domain = ($Process).getowner().Domain
         
-        if ($Process.processname -eq "System Idle Process" -and($Process.ProcessId -ne "0" -or $Process.ParentProcessId -ne "0")){
+        if ($Process.ProcessName -eq "System Idle Process" -and($Process.ProcessId -ne "0" -or $Process.ParentProcessId -ne "0")){
                  #System Idle Process
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " System Idle process" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - System Idle Process should have a ProcessID of 0 and a ParentProcessID of 0.`n"
         }
         
-        if ($Process.processname -eq "System" -and ($Process.ProcessId -ne "4" -or $Process.ParentProcessId -ne "0")){
+        if ($Process.ProcessName -eq "System" -and ($Process.ProcessId -ne "4" -or $Process.ParentProcessId -ne "0")){
                  #System
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " System" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - System should have a ProcessID of 4 and a ParentProcessID of 0.`n"
         }
         
-        if ($Process.processname -eq "smss.exe" -and ($Process.ParentProcessId -ne "4")){
+        if ($Process.ProcessName -eq "smss.exe" -and ($Process.ParentProcessId -ne "4")){
                  #smss.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " smss.exe" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - smss.exe should have a ParentProcessID of 4.`n"
         }         
-        
-        if ($Process.processname -eq "wininit.exe" -and ($ParentProcessName)){
+
+        if ($Process.ProcessName -eq "smss.exe" -and (($Process).getowner().user -ne "SYSTEM" -or ($Process).getowner().user -ne "NT AUTHORITY")){
+                 #smss.exe
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " smss.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - smss.exe should have a User of SYSTEM or NT AUTHORITY.`n"
+        }
+
+        if ($Process.ProcessName -eq "wininit.exe" -and ($ParentProcessName)){
                  
                  #wininit.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
@@ -46,7 +53,7 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - wininit.exe should have no ParentProcessID.`n"
         }  
        
-        if ($Process.processname -eq "winlogon.exe" -and ($ParentProcessName)){
+        if ($Process.ProcessName -eq "winlogon.exe" -and ($ParentProcessName)){
                  
                  #winlogon.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
@@ -54,7 +61,7 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - winlogon.exe should have no ParentProcessID.`n"
         } 
 
-        if ($Process.processname -eq "csrss.exe" -and ($ParentProcessName)){
+        if ($Process.ProcessName -eq "csrss.exe" -and ($ParentProcessName)){
                  
                  #csrss.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
@@ -74,3 +81,6 @@ foreach ($Process in $ProcessList){
 
     Write-Host "___________________________________________________________________________________________________________________________________`n"
 }
+
+
+
