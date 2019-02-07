@@ -14,7 +14,7 @@ foreach ($Process in $ProcessList){
             
     $ParentProcessName =  (get-wmiobject -Class Win32_process | Where-Object {$_.processid -eq $Process.parentprocessid}).name
     $SID = ($Process).getownersid().SID
-    $User = ($Process).getowner().user
+    $User = ($Process).getowner().User
     $Domain = ($Process).getowner().Domain
         
         if ($Process.processname -eq "System Idle Process" -and($Process.ProcessId -ne "0" -or $Process.ParentProcessId -ne "0")){
