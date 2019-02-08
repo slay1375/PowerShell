@@ -7,6 +7,14 @@
     Created        : January 14, 2019
 #>
 
+# System Idle Process: Process ID, Parent Process ID
+# System: Process ID, Parent Process ID
+# smss.exe: Parent ID, User, Path
+# wininit.exe: Parent Process Name, Count, User, Path
+# winlogon.exe: Parent Process Name, User, Path
+# csrss.exe: Parent Process Name, User, Path
+# svchost.exe: Parent Process Name, Path
+
 clear
 
 $ProcessList = Get-WmiObject -Class Win32_Process
@@ -52,12 +60,12 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - smss.exe should have a User of SYSTEM or NT AUTHORITY.`n"
         }
 
-        if ($Process.ProcessName -eq "services.exe" -and ($Path.ToString()) -and ($Path -ne "C:\WINDOWS\system32\services.exe")){    
+        if ($Process.ProcessName -eq "smss.exe" -and ($Path.ToString()) -and ($Path -ne "C:\WINDOWS\system32\smss.exe")){    
 
-                 #smss.exe: Path = C:\windows\system32\services.exe
+                 #smss.exe: Path = C:\windows\system32\smss.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " smss.exe" -ForegroundColor DarkYellow "`n"
-                 Write-Host "     - smss.exe should should be located in C:\windows\system32\services.exe.`n"
+                 Write-Host "     - smss.exe should should be located in C:\windows\system32\smss.exe.`n"
         }
 
         if ($Process.ProcessName -eq "wininit.exe" -and ($ParentProcessName)){
@@ -76,20 +84,20 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - There should only be one instance of wininit.exe running.`n"
         }  
 
+        if ($Process.ProcessName -eq "wininit.exe" -and ($User -ne "SYSTEM")){
+
+                 #wininit.exe: User Account = SYSTEM or NT AUTHORITY
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " wininit.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - wininit.exe should have a User of SYSTEM or NT AUTHORITY.`n"
+        }
+
         if ($Process.ProcessName -eq "wininit.exe" -and ($Path.ToString()) -and ($Path -ne "C:\windows\system32\wininit.exe")){    
 
                  #wininit.exe: Path = C:\windows\system32\wininit.exe
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " smss.exe" -ForegroundColor DarkYellow "`n"
-                 Write-Host "     - smss.exe should should be located in C:\windows\system32\services.exe.`n"
-        }
-
-        if ($Process.ProcessName -eq "wininit.exe" -and ($User -ne "SYSTEM")){
-
-                 #smss.exe: User Account = SYSTEM or NT AUTHORITY
-                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
-                 Write-Host " wininit.exe" -ForegroundColor DarkYellow "`n"
-                 Write-Host "     - wininit.exe should have a User of SYSTEM or NT AUTHORITY.`n"
+                 Write-Host "     - wininit.exe should should be located in C:\windows\system32\wininit.exe.`n"
         }
 
         if ($Process.ProcessName -eq "winlogon.exe" -and ($ParentProcessName)){
@@ -118,7 +126,7 @@ foreach ($Process in $ProcessList){
 
         if ($Process.ProcessName -eq "csrss.exe" -and ($ParentProcessName)){
 
-                 #csrss.exe
+                 #csrss.exe: Parent Process = Created by an instance of smss.exe that exits, so tools usually do not provide the parent process name.
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " csrss.exe" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - csrss.exe should have no ParentProcessID.`n"
@@ -158,16 +166,14 @@ foreach ($Process in $ProcessList){
 
     ($Process | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine, @{n="StartTime";e={ $_.ConvertToDateTime($Process.creationdate) }}, @{n="User";e={ $User }}, @{n="SID";e={ $SID }}, @{n="Domain";e={$Domain }}  | Format-List | Out-String).trim()
 
+
     foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Process.processid -and $_.state -eq "Established"})){
-
         Write-Host "Established       : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
-
     } 
 
+
     foreach ($establishedIP in (Get-NetTCPConnection | Where-Object {$_.owningprocess -eq $Process.processid -and $_.state -eq "Listen"})){
-
         Write-Host "Listening         : $($establishedIP.LocalAddress):$($establishedIP.LocalPort)  ===>  $($establishedIP.RemoteAddress):$($establishedIP.RemotePort)"
-
     } 
 
     Write-Host "___________________________________________________________________________________________________________________________________`n"
