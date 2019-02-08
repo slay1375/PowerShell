@@ -158,7 +158,7 @@ foreach ($Process in $ProcessList){
         }
 
         if ($Process.ProcessName -eq "svchost.exe" -and ($ParentProcessName -eq "services.exe")){
-            {continue}
+            {     }
         elseif ($ParentProcessName -ne "services.exe")   
                  
                  #csrss.exe: Path = C:\windows\system32\csrss.exe
