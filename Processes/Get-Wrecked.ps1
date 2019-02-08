@@ -6,6 +6,29 @@
     Prerequisite   : Windows PowerShell 5.0
     Created        : January 14, 2019
 <#
+<#
+
+Process ID: 
+    Is a number used by an operating system to uniquely identify a process.
+
+Parent Process ID: 
+    Is a number used by an operating system to uniquely identify a process that has spawned another process.
+
+Parent Process Name: 
+    The name associated to a Parent ID.
+
+Count: 
+
+
+User:
+
+    
+Path:
+
+
+
+
+
 System Idle Process: 
     - Process ID, Parent Process ID
 System: 
@@ -24,6 +47,9 @@ services.exe:
     - Parent Process Name, Count, User, Path
 lsass.exe:
     - Parent Process Name, Count, User Path
+RuntimeBroker.exe
+    - Parent Process Name, Path
+
 #> 
 
 clear
@@ -249,6 +275,22 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - services.exe should should be located in C:\windows\system32\lsass.exe.`n"
         }
 #___________________________________________________________________________________________________________________________________________
+
+        if ($Process.ProcessName -eq "RuntimeBroker.exe" -and ($ParentProcessName -ne "svchost.exe")){
+
+                 #RuntimeBroker.exe: Parent Process = svchost.exe
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " RuntimeBroker.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - RuntimeBroker.exe should have a Parent Process named svchost.exe.'n"
+        }
+
+        if ($Process.ProcessName -eq "RuntimeBroker.exe" -and ($Path.ToString()) -and ($Path -ne "C:\windows\system32\RuntimeBroker.exe")){    
+
+                 #RuntimeBroker.exe: Path = C:\windows\system32\RuntimeBroker.exe
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " RuntimeBroker.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - RuntimeBroker.exe should should be located in C:\windows\system32\RuntimeBroker.exe.`n"
+        }
 
     ($Process | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine, @{n="StartTime";e={ $_.ConvertToDateTime($Process.creationdate) }}, @{n="User";e={ $User }}, @{n="SID";e={ $SID }}, @{n="Domain";e={$Domain }}  | Format-List | Out-String).trim()
 
