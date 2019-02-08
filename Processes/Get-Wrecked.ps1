@@ -22,6 +22,8 @@ svchost.exe:
     - Parent Process Name, Path
 services.exe:
     - Parent Process Name, Count, User, Path
+lsass.exe:
+    - Parent Process Name, Count, User Path
 #> 
 
 clear
@@ -37,6 +39,7 @@ foreach ($Process in $ProcessList){
     $Path = $Process | select path
     $Wininit = Get-Process | Where-Object {$_.Name -eq "wininit"}
     $services = Get-Process | Where-Object {$_.Name -eq "services"}
+    $lsass = Get-Process | Where-Object {$_.Name -eq "lsass"}
        
         if ($Process.ProcessName -eq "System Idle Process" -and ($Process.ProcessId -ne "0" -or $Process.ParentProcessId -ne "0")){
 
@@ -212,6 +215,40 @@ foreach ($Process in $ProcessList){
                  Write-Host " services.exe" -ForegroundColor DarkYellow "`n"
                  Write-Host "     - services.exe should should be located in C:\windows\system32\services.exe.`n"
         }
+#___________________________________________________________________________________________________________________________________________
+        
+        if ($Process.ProcessName -eq "lsass.exe" -and ($ParentProcessName -ne "wininit.exe")){
+
+                 #lsass.exe: Parent Process = wininit.exe
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " lsass.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - lsass.exe should have a Parent Process named wininit.exe.'n"
+        }
+
+        if ($Process.ProcessName -eq "lsass.exe" -and ($lsass.count -gt 1)){
+
+                 #lsass.exe: Count = 1
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " lsass.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - There should only be one instance of lsass.exe running.`n"
+        }
+
+        if ($Process.ProcessName -eq "lsass.exe" -and ($User -ne "SYSTEM")){
+
+                 #lsass.exe: User Account = SYSTEM or NT AUTHORITY
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " lsass.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - lsass.exe should have a User of SYSTEM or NT AUTHORITY.`n"
+        } 
+
+        if ($Process.ProcessName -eq "lsass.exe" -and ($Path.ToString()) -and ($Path -ne "C:\windows\system32\lsass.exe")){    
+
+                 #lsass.exe: Path = C:\windows\system32\lsass.exe
+                 Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
+                 Write-Host " lsass.exe" -ForegroundColor DarkYellow "`n"
+                 Write-Host "     - services.exe should should be located in C:\windows\system32\lsass.exe.`n"
+        }
+#___________________________________________________________________________________________________________________________________________
 
     ($Process | select ProcessName, ProcessID, @{n="ParentProcessName";e={ $ParentProcessName }}, ParentProcessID, Path, CommandLine, @{n="StartTime";e={ $_.ConvertToDateTime($Process.creationdate) }}, @{n="User";e={ $User }}, @{n="SID";e={ $SID }}, @{n="Domain";e={$Domain }}  | Format-List | Out-String).trim()
 
