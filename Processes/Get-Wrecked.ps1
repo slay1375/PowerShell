@@ -5,8 +5,7 @@
     Author         : @PlayStation1; @TerrySmithMBA
     Prerequisite   : Windows PowerShell 5.0
     Created        : January 14, 2019
-<#
-<#
+______________________________________________________________________________________________________________________________
 
 Process ID: 
     Is a number used by an operating system to uniquely identify a process.
@@ -18,16 +17,14 @@ Parent Process Name:
     The name associated to a Parent ID.
 
 Count: 
-
+    Identifies how many of a specific process are running. 
 
 User:
-
+    The user account that spawned a specific process.
     
 Path:
-
-
-
-
+    The path location where the process executable is running from.
+______________________________________________________________________________________________________________________________
 
 System Idle Process: 
     - Process ID, Parent Process ID
@@ -50,6 +47,9 @@ lsass.exe:
 RuntimeBroker.exe
     - Parent Process Name, Path
 
+
+
+______________________________________________________________________________________________________________________________
 #> 
 
 clear
@@ -93,8 +93,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - smss.exe should have a ParentProcessID of 4.`n"
         }         
 
-        if ($Process.ProcessName -eq "smss.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "smss.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "smss.exe" -and ($User -ne "SYSTEM")){
                  #smss.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " smss.exe" -ForegroundColor DarkYellow "`n"
@@ -126,8 +127,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - There should only be one instance of wininit.exe running.`n"
         }  
 
-        if ($Process.ProcessName -eq "wininit.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "wininit.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "wininit.exe" -and ($User -ne "SYSTEM")){
                  #wininit.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " wininit.exe" -ForegroundColor DarkYellow "`n"
@@ -151,8 +153,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - winlogon.exe should have no Parent Process.`n"
         } 
 
-        if ($Process.ProcessName -eq "winlogon.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "winlogon.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "winlogon.exe" -and ($User -ne "SYSTEM")){
                  #winlogon.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " winlogon.exe" -ForegroundColor DarkYellow "`n"
@@ -176,8 +179,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - csrss.exe should have no Parent Process.`n"
         }
 
-        if ($Process.ProcessName -eq "csrss.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "csrss.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "csrss.exe" -and ($User -ne "SYSTEM")){
                  #csrss.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " csrss.exe" -ForegroundColor DarkYellow "`n"
@@ -226,8 +230,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - There should only be one instance of services.exe running.`n"
         }
 
-        if ($Process.ProcessName -eq "services.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "services.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "services.exe" -and ($User -ne "SYSTEM")){
                  #services.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " services.exe" -ForegroundColor DarkYellow "`n"
@@ -259,8 +264,9 @@ foreach ($Process in $ProcessList){
                  Write-Host "     - There should only be one instance of lsass.exe running.`n"
         }
 
-        if ($Process.ProcessName -eq "lsass.exe" -and ($User -ne "SYSTEM")){
-
+        if ($Process.ProcessName -eq "lsass.exe" -and ($User -eq $null)){
+            }
+        elseif($Process.ProcessName -eq "lsass.exe" -and ($User -ne "SYSTEM")){
                  #lsass.exe: User Account = SYSTEM or NT AUTHORITY
                  Write-Host "Potential threat found with process: " -ForegroundColor DarkYellow -NoNewline
                  Write-Host " lsass.exe" -ForegroundColor DarkYellow "`n"
